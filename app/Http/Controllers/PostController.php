@@ -75,9 +75,10 @@ class PostController extends Controller
 
         return redirect()->route('top');
     }
-    public function destroy(Post $post)
+    public function destroy(Post $post,Comment $comment)
     {
         $post->delete();
+        $post->comments()->delete();
         return redirect()->route('top');
     }
 }

@@ -5,13 +5,13 @@
         <h1>
             新規投稿作成
         </h1>
-
+        
         <form action="{{ route('top.store')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="formgroup card mb-2">
                 <input type="text" name="title" placeholder="タイトルを入力">
             </div>
-            <div class="formgroup">
+            <div class="formgroup card mb-2">
                 <textarea name="body" id="" rows="10"></textarea>
             </div>
             <div>
