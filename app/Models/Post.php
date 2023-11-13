@@ -22,4 +22,8 @@ class Post extends Model
     public function comments(){
         return $this->hasMany('App\Models\Comment');
     }
+    //いいね機能
+    public function Likes(){
+        return $this->hasMany('App\Models\Like');
+    }
 }

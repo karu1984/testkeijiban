@@ -34,7 +34,7 @@ class CommentController extends Controller
         $comment->user_id = Auth::user()->id;
         $comment->save();
  
-        return redirect()->route('top'); 
+        return redirect()->route('show',$comment->post->id);
     }
 
     /**
@@ -67,6 +67,6 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         $comment->delete();
-        return redirect()->route('top');
+        return redirect()->route('show',$comment->post->id);
     }
 }

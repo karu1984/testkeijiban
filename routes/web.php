@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\FollowController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,3 +47,10 @@ Route::delete('/top/{post}',[PostController::class,'destroy'])->name('post.destr
 Route::post('/top/{comment}/comments',[CommentController::class,'store']);
 //コメント取消処理
 Route::delete('/top/show/{comment}',[CommentController::class,'destroy'])->name('comment.destroy');
+
+//いいねを付ける
+Route::get('like/{post}',[LikeController::class,'like'])->name('like');
+//いいねをはすず
+Route::get('/unlike/{post}',[LikeController::class,'unlike'])->name('unlike');
+
+Route::get('top/{user}',[UserprofController::class,'userprof_edit'])->name('userprof');
