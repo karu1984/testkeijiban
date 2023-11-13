@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Post;
+use App\Models\Like;
 
 class UserprofController extends Controller
 {
-    public function userprof_edit(Userprof $userprof){
-        return view('userprof');
-    }
-    public function userprof(Userprof $userprof){
-        $userprof = New Userprof();
-        $userprof->introduction = $request->input(["introduction"]);
-        $userprof->user_id=auth()->user()->id;
-        $userprof->followed_id= $request->input(["followed_id"]);
-        if (request('image')){
-            $original = request()->file('image')->getClientOriginalName();
-             // 日時追加　
-            $name = date('Ymd_His').'_'.$original;
-            request()->file('image')->move('storage/images', $name);
-            $userprof->image = $name;
-        }
-        $userprof->save();
+    //public function hyoji(Post $post,User $user){
+    //    $posts=Post::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(2);
+    //    return view('hyoji',compact('posts'));
+    //}
+
+    public function hyoji(Post $post,User $user,Like $like){
+        $l_posts = Like::where('user_id',Auth::user()->id)->get();
+    
+    
+    $posts=Post::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(2);
+        return view('hyoji',compact('posts','l_posts'));
     }
 }

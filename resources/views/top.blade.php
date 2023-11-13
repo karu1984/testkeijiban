@@ -3,7 +3,8 @@
     <div class="container">
         <div class="row">
             <h1>投稿記事一覧</h1>
-           
+            <a href="{{ url('hyoji') }}" class="btn btn-secondary">
+                マイページ</a>
             <div>
                 @auth
                     こんにちは{{ $user->name }}さん<br>
