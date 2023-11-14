@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+//ソフトデリート使うための親クラス
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
     use HasFactory;
+    //ソフトデリート使うための宣言
+    use SoftDeletes;
 
     protected $fillable = [
         'title',
