@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\UserprofController;
+use App\Http\Controllers\UserprofileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,4 +55,25 @@ Route::get('like/{post}',[LikeController::class,'like'])->name('like');
 //いいねをはすず
 Route::get('/unlike/{post}',[LikeController::class,'unlike'])->name('unlike');
 
+//マイページ表示
 Route::get('hyoji',[UserprofController::class,'hyoji'])->name('hyoji');
+
+//ユーザプロフィールを表示
+Route::get('userprofile', [UserprofileController::class,'index'])->name('userprofile');
+//プロジェクト作成ページに遷移
+Route::get('/userprofiletop/create',[UserprofileController::class,'create'])->name('userprofile.create');
+//プロフィールを保存
+Route::post('/userprofile/store',[UserprofileController::class,'store'])->name('userprofile.store');
+//プロフィールを表示
+Route::get('/userprofile/show/{user}',[UserprofileController::class,'show'])->name('userprofile.show');
+//プロフィール編集ページに遷移
+Route::get('/userprofile/{userprofile}/edit',[UserprofileController::class,'edit'])->name('userprofile.edit');
+//プロフィールを更新
+Route::put('/userprofile/{userprofile}',[UserprofileController::class,'update'])->name('userprofile.update');
+//プロフィール物理削除
+Route::delete('/userprofile/{userprofile}',[UserprofileController::class,'destroy'])->name('userprofile.destroy');
+
+//フォローを付ける
+Route::get('userlike/{user}',[UserlikeController::class,'like'])->name('userlike');
+//フォローをはすず
+Route::get('/userlike/{user}',[UsrelikeController::class,'unlike'])->name('userunlike');

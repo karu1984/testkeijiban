@@ -58,10 +58,11 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
-
+    //ポストモデル
     public function post(){
         return $this->hasMany('App\Models\Post');
     }
+    //コメントモデル
     public function comments(){
         return $this->hasMany('App\Models\Comment');
     }
@@ -69,5 +70,12 @@ class User extends Authenticatable
     public function Likes(){
         return $this->hasMany('App\Models\Like');
     }
-    
+    //ユーザプロフィールモデル
+    public function userprofile(){
+        return $this->belongsTo('App\Models\Userprofile');
+    }
+    //ユーザライクモデル
+    public function userlikes(){
+        return $this->hasMany('App\Models\Userlike');
+    }
 }

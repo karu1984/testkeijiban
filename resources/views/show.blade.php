@@ -4,9 +4,11 @@
         <div class="row">
             <div class=col-6>
                 <h1> 記事詳細画面</h1>
-                <div class="card">
+                <div class="card ">
                     タイトル<p>{{ $post->title }}</p>
+                    <a href="{{ route('userprofile.show', $post->user->id) }}">投稿者:<p>{{ $post->user->name }}</p></a>
                 </div>
+
                 <div class="card">
                     本文<p>{{ $post->body }}</p>
                 </div>

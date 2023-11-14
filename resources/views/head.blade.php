@@ -34,7 +34,7 @@
             </ul>
         </header>
         @yield('content')
-        <footer class="fixed-bottom footer justify-content-center mt-auto py-3 mb-4 bg-body-tertiary">
+        <footer class="justify-content-center mt-auto py-3 mb-4 bg-body-tertiary">
 
             <a href="{{ url('top') }}"><span class="text-body-secondary">トップへ</span><a>
         </footer>
