@@ -17,7 +17,8 @@
                 <input type="file" name="image">
             </div>
             <div>
-                <button type="submit">登録する</button>
+                <button type="submit" class="btn btn-primary">登録する</button>
+                <a class="btn btn-success" href="{{ url('/top') }}">戻る</a>
             </div>
         </form>
     </div>

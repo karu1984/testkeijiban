@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
-        Schema::table('posts', function (Blueprint $table) {
-            //ソフトデリート使うためのカラム
-            $table->softDeletes();
+        Schema::table('comments', function (Blueprint $table) {
+             //ソフトデリート使うためのカラム
+             $table->softDeletes();
         });
     }
 
@@ -23,9 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            //ソフトデリート使うためのカラム削除
-            $table->dropSoftDeletes();
+        Schema::table('comments', function (Blueprint $table) {
+           //ソフトデリート使うためのカラム削除
+           $table->dropSoftDeletes();
         });
     }
 };

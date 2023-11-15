@@ -26,6 +26,7 @@
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary">更新する</button>
+                    <a class="btn btn-success" href="{{ url('/top') }}">戻る</a>
                 </div>
             </form>
         </div>

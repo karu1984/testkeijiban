@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
-        Schema::table('posts', function (Blueprint $table) {
-            //ソフトデリート使うためのカラム
-            $table->softDeletes();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('image')->default('デフォルト人影画像.png');
         });
     }
 
@@ -23,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            //ソフトデリート使うためのカラム削除
-            $table->dropSoftDeletes();
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('image');
         });
     }
 };

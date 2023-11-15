@@ -1,5 +1,6 @@
 @extends('head')
 @section('content')
+
     <p>マイページ　ログイン者:{{ auth()->user()->name }}</p>
 
     <div class="justify-content-center mt-auto py-0 mb-2 bg-body-tertiary">投稿したポスト新着</div>

@@ -21,4 +21,6 @@ class UserprofController extends Controller
         $posts = Post::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(2);
         return view('hyoji',compact('posts','l_posts'));
     }
+
+    
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\UserprofController;
 use App\Http\Controllers\UserprofileController;
+use App\Http\Controllers\UserlikeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,6 +55,12 @@ Route::delete('/top/show/{comment}',[CommentController::class,'destroy'])->name(
 Route::get('like/{post}',[LikeController::class,'like'])->name('like');
 //いいねをはすず
 Route::get('/unlike/{post}',[LikeController::class,'unlike'])->name('unlike');
+
+//フォローを付ける
+Route::get('userlike/{user}',[UserlikeController::class,'userlike'])->name('userlike');
+//フォローをはすず
+Route::get('/userunlike/{user}',[UserlikeController::class,'userunlike'])->name('userunlike');
+
 
 //マイページ表示
 Route::get('hyoji',[UserprofController::class,'hyoji'])->name('hyoji');

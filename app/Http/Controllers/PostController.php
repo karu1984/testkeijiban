@@ -5,15 +5,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Userprofile;
 use App\Models\Comment;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Userprofile $userprofile,Post $post)
     {
+        
         $posts=Post::orderBy('created_at','desc')->paginate(3);
         $user=Auth::user();
-        return view('top',compact('user','posts'));
+        $userprofiles = Userprofile::all();
+        
+        return view('top',compact('user','posts','userprofiles'));
     }
 
     public function create()
