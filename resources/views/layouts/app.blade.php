@@ -34,14 +34,15 @@ aaaaaa
 
             <!-- Page Content -->
             aaaa
-            @yield('test')
+          
             {{-- <main>
                 {{ $slot }}
             </main> --}}
         </div>
-
+        @yield('test')
         {{-- @stack('modals') --}}
 
         @livewireScripts
+        @yield('test')
     </body>
 </html>
