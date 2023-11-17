@@ -8,6 +8,7 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\UserprofController;
 use App\Http\Controllers\UserprofileController;
 use App\Http\Controllers\UserlikeController;
+use App\Http\Controllers\FollowuserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -81,6 +82,21 @@ Route::put('/userprofile/{userprofile}',[UserprofileController::class,'update'])
 Route::delete('/userprofile/{userprofile}',[UserprofileController::class,'destroy'])->name('userprofile.destroy');
 
 //フォローを付ける
-Route::get('userlike/{user}',[UserlikeController::class,'like'])->name('userlike');
+//oute::get('userlike/{user}',[UserlikeController::class,'like'])->name('userlike');
 //フォローをはすず
-Route::get('/userlike/{user}',[UsrelikeController::class,'unlike'])->name('userunlike');
+//Route::get('/userlike/{user}',[UsrelikeController::class,'unlike'])->name('userunlike');
+
+//ユーザ一覧を表示
+Route::get('users', [FollowuserController::class,'index'])->name('users');
+// Route::post('/users/{user}/unfollow', [FollowuserController::class,'unfollow']);
+
+//Route::post('/follow/{userId}', [ FollowuserController::class, 'store'])->name('follow');
+
+//followを付ける
+Route::get('follow/{user}',[FollowuserController::class,'follow'])->name('follow');
+//followをはすず
+Route::get('/unfollow/{user}',[FollowuserController::class,'unfollow'])->name('unfollow');
+
+
+
+Route::get('search', [PostController::class,'search'])->name('post.search');

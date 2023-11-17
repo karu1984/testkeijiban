@@ -1,7 +1,7 @@
 @extends('head')
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-6 mt-4">
                 <h1>投稿編集画面</h1>
                 {{-- コメントの編集 --}}
@@ -11,7 +11,7 @@
                     <div class="formgroup card mb-2">
                         <input type="text" name="title" placeholder="タイトルを入力" value="{{ old('title', $post->title) }}">
                     </div>
-                    <div class="formgroup">
+                    <div class="formgroup card">
                         <textarea name="body" rows="10">{{ old('body', $post->body) }}</textarea>
                     </div>
                     {{-- 画像があれば --}}

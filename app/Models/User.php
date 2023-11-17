@@ -70,12 +70,17 @@ class User extends Authenticatable
     public function Likes(){
         return $this->hasMany('App\Models\Like');
     }
-    //ユーザプロフィールモデル
-    public function userprofile(){
-        return $this->belongsTo('App\Models\Userprofile');
+
+    // フォロワー→フォロー
+    public function followusers()
+    {
+        //多対多のリレーション、モデル指定、モデル内のファンクション指定。
+        return $this->belongsToMany('App\Models\User', 'followusers', 'followed_user_id', 'following_user_id');
     }
-    //ユーザライクモデル
-    public function userlikes(){
-        return $this->hasMany('App\Models\Userlike');
-    }
+
+     // フォロー→フォロワー
+     public function follows()
+     {
+         return $this->belongsToMany('App\Models\User', 'followusers', 'following_user_id', 'followed_user_id');
+     }
 }
