@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Like;
 use App\Models\Userprofile;
 use App\Models\Comment;
 
@@ -80,11 +81,32 @@ class PostController extends Controller
 
         return redirect()->route('top')->with('henkou','投稿を編集しました');
     }
+
     public function destroy(Post $post,Comment $comment)
     {
         $post->delete();
         $post->comments()->delete();
-        return redirect()->route('top')->with('delete','投稿を削除しました');;
+       
+        $like = Like::where('post_id', $post->id)->delete();
+      
+        // return back()->with('delete','投稿を削除しました');
+      
+        return redirect()->route('top')->with('delete','投稿を削除しました');
+        
+    }
+
+
+    public function destroytwo(Post $post,Comment $comment,Userprofile $userprofile)
+    {
+        $post->delete();
+        $post->comments()->delete();
+       
+        $like = Like::where('post_id', $post->id)->delete();
+      
+        return back()->with('delete','投稿を削除しました');
+      
+        // return redirect()->route('top')->with('delete','投稿を削除しました');
+        
     }
 
     public function search(Request $request)

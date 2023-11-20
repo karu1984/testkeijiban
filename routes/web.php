@@ -46,6 +46,8 @@ Route::get('/top/{post}/edit',[PostController::class,'edit'])->name('edit');
 Route::put('/top/{post}',[PostController::class,'update'])->name('update');
 
 Route::delete('/top/{post}',[PostController::class,'destroy'])->name('post.destroy');
+Route::delete('/userprofile/{post}',[PostController::class,'destroytwo'])->name('post.destroytwo');
+
 
 //コメント投稿処理
 Route::post('/top/{comment}/comments',[CommentController::class,'store']);

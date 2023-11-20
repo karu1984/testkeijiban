@@ -10,7 +10,7 @@
                 <form action="{{ route('top.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="formgroup card mb-1">
-                        <input type="text" name="title" value="{{old('title')}}" placeholder="タイトルを入力">
+                        <input type="text" name="title" value="{{ old('title') }}" placeholder="タイトルを入力">
                     </div>
                     {{-- バリデーションエラーの表示 --}}
                     @error('title')
@@ -18,14 +18,16 @@
                     @enderror
 
                     <div class="formgroup card mb-2">
-                        <textarea name="body" id="" rows="7" >{{old('body')}}</textarea>
+                        <textarea name="body" id="" rows="7">{{ old('body') }}</textarea>
                     </div>
                     {{-- バリデーションエラーの表示 --}}
                     @error('body')
                         <span style="color:red;">本文を255文字以内で入力してください</span>
                     @enderror
                     <div>
-                        <input type="file" name="image">
+                        <label class="btn btn-sm btn-danger my-1">
+                            <input type="file" name="image" style="display: none;">画像を選択
+                        </label>
                     </div>
 
                     <div class="text-end">

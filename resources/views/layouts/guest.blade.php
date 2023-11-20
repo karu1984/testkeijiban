@@ -13,15 +13,26 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+       
         <!-- Styles -->
         @livewireStyles
+        <style>
+        .min-h-screen{
+            background:rgb(253, 253, 253);
+        }
+        h1{
+            font-family:  'Bold';
+            font-size: 2em
+        }
+        </style>
+
+        
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">
+            
             {{ $slot }}
         </div>
-aaaaffff
         @livewireScripts
     </body>
 </html>

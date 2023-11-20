@@ -19,8 +19,7 @@
     </head>
     <body class="font-sans antialiased">
         <x-banner />
-aaaaaa
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-900">
             @livewire('navigation-menu')
 
             <!-- Page Heading -->
@@ -33,16 +32,15 @@ aaaaaa
             @endif
 
             <!-- Page Content -->
-            aaaa
           
             {{-- <main>
                 {{ $slot }}
             </main> --}}
         </div>
-        @yield('test')
+      
         {{-- @stack('modals') --}}
 
         @livewireScripts
-        @yield('test')
+       
     </body>
 </html>

@@ -28,6 +28,10 @@ class CommentController extends Controller
      */
     public function store(Request $request,Post $post)
     {
+        $request->validate([
+            'comment' =>'required|max:255',
+        ]);
+
         $comment = new Comment();
         $comment->comment = $request->comment;
         $comment->post_id = $request->post_id;

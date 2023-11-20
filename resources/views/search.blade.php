@@ -1,7 +1,8 @@
 @extends('head')
 @section('content')
     <div class="container">
-        <div class="row">
+
+        <div class="row  justify-content-center">
             <div class="col-7">
                 <h1>検索記事一覧</h1>
                 <div class="card p-2">
@@ -11,7 +12,7 @@
                                 {{-- ユーザ画像表示 --}}
                                 <a href="{{ route('userprofile.show', $post->user->id) }}">
                                     <img src="{{ asset('storage/images/' . $post->user->image) }}"
-                                        class="m-2 img-fluid rounded-circle"></a>
+                                        class="m-2 mask border border-2"></a>
                             </div>
                             {{-- 投稿タイトル --}}
                             <div class="col">

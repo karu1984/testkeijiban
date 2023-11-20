@@ -15,15 +15,35 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <style>
-        .unlike-btn{
-            color:#e54747;
+.mask {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+.mask-head {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+
+        .unlike-btn {
+            color: #e54747;
             margin-left: 20px;
         }
-        .likecount{
-            color:#e54747;
+
+        .likecount {
+            color: #e54747;
         }
-        .like-btn{
-            color:#968b8b;
+
+        .like-btn {
+            color: #968b8b;
             margin-left: 20px;
         }
 
@@ -59,17 +79,28 @@
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a href="{{ url('top') }}"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <svg class="bi me-2" width="40" height="32">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
                 <span class="fs-4">シンプル掲示板</span>
             </a>
             <table>
                 <tr>
                     <td>
                         <ul class="nav nav-pills">
-                            <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">ログイン</a></li>
-                            <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">新規登録</a></li>
+                            @auth
+                                {{-- ログアウトボタン、ナビリンククラスで下線なしになった。 --}}
+                                <li class="nav-item">
+                                    <a href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                        class="nav-link">ログアウト</a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
+                            @else
+                                <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">ログイン</a></li>
+                                <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">新規登録</a></li>
+
+                            @endauth
                             {{-- 検索機能のテスト --}}
                             <form method="get" action="{{ route('post.search') }}" class="d-inline-block w-50">
                                 <div class="form-group ">
@@ -77,7 +108,8 @@
                                         <input type="text" name="keyword" class="form-control" placeholder="検索"
                                             value="{{ request()->input('keyword') }}"autocomplete="on">
                                         <div class="input-group-append">
-                                            <button type="submit" class="btn btn-light mx-1"><i class="bi bi-search"></i></button>
+                                            <button type="submit" class="btn btn-light mx-1"><i
+                                                    class="bi bi-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -89,18 +121,19 @@
                     <td>
 
                         @auth
-                      {{-- ユーザ画像表示 --}}
-                      <a href="{{ route('userprofile.show', auth()->user()->id) }}">
-                        <img src="{{ asset('storage/images/' . auth()->user()->image) }}"
-                            class="m-2 rounded-circle border border-1" height="40"></a>
-                        こんにちは{{ auth()->user()->name }}さん
+                            {{-- ユーザ画像表示 --}}
+                            <a href="{{ route('userprofile.show', auth()->user()->id) }}">
+                                <img src="{{ asset('storage/images/' . auth()->user()->image) }}"
+                                    class="m-2 mask-head img-fluid border border-1" height="5px"></a>
+                            こんにちは{{ auth()->user()->name }}さん
                             <a href="{{ route('userprofile') }}" class="btn btn-success mb-2">マイページ</a>
                             {{-- 新規投稿 --}}
-                            <a href="{{ route('top.create') }}" class="btn btn-primary mb-2 px-2"><i class="bi bi-pen-fill px-2"></i></a>
+                            <a href="{{ route('top.create') }}" class="btn btn-primary mb-2 px-2"><i
+                                    class="bi bi-pen-fill px-2"></i></a>
                         @else
                             ログインするとマイページ閲覧、ポストの新規投稿ができます。
                         @endauth
-                        
+
                     </td>
                 </tr>
             </table>
@@ -111,6 +144,8 @@
             <a href="{{ url('top') }}"><span class="text-body-secondary">トップへ</span><a>
         </footer>
     </div>
+    <script src="{{ asset('resources/js/testdayo.js') }}"></script>
+
 </body>
 
 </html>

@@ -14,9 +14,9 @@ class UserprofileController extends Controller
     public function index(Userprofile $userprofile,Post $post,User $user,Like $like)
     {
         //自身がいいねした投稿の一覧
-        $l_posts = Like::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->get();
+        $l_posts = Like::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
         //自身が投稿した投稿の一覧
-        $posts = Post::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(2);
+        $posts = Post::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
         //自身のプロフィール
         $userprofile=Userprofile::where('user_id',Auth::user()->id)->first();
         //ログインユーザの情報

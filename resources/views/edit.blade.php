@@ -23,7 +23,8 @@
                         </div>
                     @endif
                     <div>
-                        <input type="file" name="image">
+                        <label class="btn btn-sm btn-danger my-1">
+                            <input type="file" name="image" style="display: none;">画像を選択</label>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary">更新する</button>
