@@ -2,7 +2,12 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-6 mt-4">
+
+            {{-- サイドバーパーツ自己紹介など --}}
+            @include('sidebar')
+
+            {{-- コンテンツ本体 --}}
+            <div class="col-7 mt-4">
                 <h1>投稿編集画面</h1>
                 {{-- コメントの編集 --}}
                 <form action="{{ route('update', $post) }}" method="post" enctype="multipart/form-data">
@@ -17,14 +22,13 @@
                     {{-- 画像があれば --}}
                     @if ($post->image)
                         <div class="card">
-                            (画像ファイル：{{ $post->image }})
+                            画像ファイル：{{ $post->image }}
                             <img src="{{ asset('storage/images/' . $post->image) }}" class="mx-auto d-block"
                                 style="height:100px;">
                         </div>
                     @endif
                     <div>
-                        <label class="btn btn-sm btn-danger my-1">
-                            <input type="file" name="image" style="display: none;">画像を選択</label>
+                            <input class="my-1" type="file" name="image">
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary">更新する</button>
@@ -32,6 +36,9 @@
                     </div>
                 </form>
             </div>
+            
+             {{-- サイドバーパーツ、広告など --}}
+             @include('sidepop')
         </div>
     </div>
 @endsection

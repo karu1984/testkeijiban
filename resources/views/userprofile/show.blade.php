@@ -2,19 +2,24 @@
 @section('content')
     <div class="row justify-content-center">
 
+        {{-- サイドバーパーツ自己紹介など --}}
+        @include('sidebar')
+
+
+        {{-- 自己紹介などコンテンツ本体 --}}
         <!--自己紹介があれば表示-->
         <div class="col-7">
-            <h4>投稿したユーザのプロフィールページです</h4>
+            <h4 class="mt-2  anim-box slidein is-animated">投稿したユーザのプロフィールページです</h4>
             @if (isset($userprofile->id))
                 <div class="row">
                     <!--画像があれば表示-->
                     <div class="col-2 m-2">
-                        <img src="{{ asset('storage/images/' . $user->image) }}" class="img-fluid rounded-circle">
+                        <img src="{{ asset('storage/images/' . $user->image) }}" class="mask">
                     </div>
                     <div class="col">
                         ユーザID:{{ $user->id }}<br>
                         ユーザ氏名:{{ $user->name }}<br>
-                        紹介:{{ $userprofile->introduction }}<br>
+                        紹介:{{ $user->introduction }}<br>
                     </div>
                 </div>
                 <!--自己紹介が登録されてなければ表示-->
@@ -26,17 +31,17 @@
             {{-- if表示されてるユーザがモデルのfollowusersリレーションでフォローしてるユーザと
             ログインユーザの条件が一致するレコードが1ならば --}}
             @auth
-            <div class="text-end">
-                @if ($user->followusers()->where('following_user_id', Auth::user()->id)->count() == 1)
-                    <a href="{{ route('unfollow', $user) }}" class="btn btn-danger btn-sm">
-                        フォローを外す
-                    </a>
-                @else
-                    <a href="{{ route('follow', $user) }}" class="btn btn-success btn-sm">
-                        フォローする
-                    </a>
-                @endif
-            </div>
+                <div class="text-end">
+                    @if ($user->followusers()->where('following_user_id', Auth::user()->id)->count() == 1)
+                        <a href="{{ route('unfollow', $user) }}" class="btn btn-danger btn-sm">
+                            フォローを外す
+                        </a>
+                    @else
+                        <a href="{{ route('follow', $user) }}" class="btn btn-success btn-sm">
+                            フォローする
+                        </a>
+                    @endif
+                </div>
             @endauth
 
             <!--投稿の表示-->
@@ -53,6 +58,9 @@
             @endif
 
         </div>
+
+        {{-- サイドバーパーツ、広告など --}}
+        @include('sidepop')
 
     </div>
 @endsection

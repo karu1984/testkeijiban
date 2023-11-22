@@ -17,14 +17,20 @@ class PostController extends Controller
         $posts=Post::orderBy('created_at','desc')->paginate(3);
         $user=Auth::user();
         $userprofiles = Userprofile::all();
+        if(isset(Auth::user()->id)){
+        $userprofile=Userprofile::where('user_id',Auth::user()->id)->first();
+        }
         
-        return view('top',compact('user','posts','userprofiles'));
+        return view('top',compact('user','posts','userprofiles','userprofile'));
     }
 
     public function create(User $user)
     {
         $user=Auth::user();
-        return view('create',compact('user'));
+        if(isset(Auth::user()->id)){
+            $userprofile=Userprofile::where('user_id',Auth::user()->id)->first();
+            }
+        return view('create',compact('user','userprofile'));
     }
 
     public function store(Request $request)
@@ -50,9 +56,12 @@ class PostController extends Controller
 
         return redirect()->route('top')->with('success','記事を投稿しました');
     }
-    public function show(Post $post)
+    public function show(Post $post,User $user,Userprofile $userprofile)
     {
-        return view('show',compact('post'));
+        $userprofile=Userprofile::where('user_id',Auth::user())->first();
+        $user=Auth::user();
+        
+        return view('show',compact('user','post','userprofile'));
     }
 
     public function edit(Post $post)

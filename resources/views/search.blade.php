@@ -1,8 +1,12 @@
 @extends('head')
 @section('content')
     <div class="container">
+        <div class="row justify-content-center">
 
-        <div class="row  justify-content-center">
+            {{-- サイドバーパーツ自己紹介など --}}
+            @include('sidebar')
+
+            {{-- コンテンツ本体 --}}
             <div class="col-7">
                 <h1>検索記事一覧</h1>
                 <div class="card p-2">
@@ -31,23 +35,30 @@
                                     <img src="{{ asset('storage/images/' . $post->image) }}">
                                 </div>
                             @endif
+                            <p>{{ $post->body }}</p>
                         </div>
 
-                        <p>{{ $post->body }}</p>
+                      
 
                         <div class="row">
-                            <div class="col">
-                                <!--コメント件数カウント-->
-                                <i class="bi bi-chat">{{ $post->comments->count() }}件</i>
-                                <!--いいねのカウント-->
-                                <i class="bi bi-heart">{{ $post->likes->count() }}件</i>
+                            <div class="col-2">
                             </div>
+                                <div class="col">
+                                    <!--コメント件数カウント-->
+                                    <i class="bi bi-chat mx-5">{{ $post->comments->count() }}件</i>
+                                    <!--いいねのカウント-->
+                                    <i class="bi bi-heart">{{ $post->likes->count() }}件</i>
+                                </div>
+                           
                         </div>
                         <hr>
                     @endforeach
                     {!! $posts->links('pagination::bootstrap-5') !!}
                 </div>
             </div>
+
+            {{-- サイドバーパーツ、広告など --}}
+            @include('sidepop')
         </div>
     </div>
 @endsection

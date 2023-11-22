@@ -2,7 +2,12 @@
 @section('content')
     <div class="container">
         <div class="row   justify-content-center">
-            <div class="col-6">
+
+            {{-- サイドバーパーツ自己紹介など --}}
+            @include('sidebar')
+
+            {{-- コンテンツ本体 --}}
+            <div class="col-7">
                 <h1>
                     新規投稿作成
                 </h1>
@@ -25,9 +30,9 @@
                         <span style="color:red;">本文を255文字以内で入力してください</span>
                     @enderror
                     <div>
-                        <label class="btn btn-sm btn-danger my-1">
-                            <input type="file" name="image" style="display: none;">画像を選択
-                        </label>
+                      
+                            <input type="file" name="image" >
+                      
                     </div>
 
                     <div class="text-end">
@@ -36,6 +41,9 @@
                     </div>
                 </form>
             </div>
+
+             {{-- サイドバーパーツ、広告など --}}
+             @include('sidepop')
         </div>
     </div>
 @endsection

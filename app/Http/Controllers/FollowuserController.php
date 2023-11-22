@@ -12,17 +12,38 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowuserController extends Controller
 {
+    //フォローしているユーザーを表示
+    //フォローされているユーザーを表示
     public function index(User $user,Followuser $followuser,Userprofile $userprofile)
     {
         $followusers=Followuser::where('following_user_id',Auth::user()->id)->orderBy('created_at','desc')->get();
         $posts = Post::whereIn('user_id', $followusers->pluck('followed_user_id'))->get();
         $users = User::whereIn('id', $followusers->pluck('followed_user_id'))->orderBy('created_at','desc')->get();
-        // $users = User::orderBy('created_at','desc')->get();
-        return view('user/index',compact('users','followusers','posts'));
+      
+
+
+        return view('user/index',compact('users'));
     }
 
+    public function followed(User $user,Followuser $followuser,Userprofile $userprofile)
+    {
+        $followedusers=Followuser::where('followed_user_id',Auth::user()->id)->orderBy('created_at','desc')->get();
+        $users = User::whereIn('id', $followedusers->pluck('following_user_id'))->orderBy('created_at','desc')->get();
+      
 
 
+        return view('user/followed',compact('users'));
+    }
+
+    
+    // public function index(User $user,Followuser $followuser,Userprofile $userprofile)
+    // {
+    //     $followusers=Followuser::where('following_user_id',Auth::user()->id)->orderBy('created_at','desc')->get();
+    //     $posts = Post::whereIn('user_id', $followusers->pluck('followed_user_id'))->get();
+    //     $users = User::whereIn('id', $followusers->pluck('followed_user_id'))->orderBy('created_at','desc')->get();
+    //     // $users = User::orderBy('created_at','desc')->get();
+    //     return view('user/index',compact('users','followusers','posts'));
+    // }
 
 
 

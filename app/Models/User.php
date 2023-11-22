@@ -83,4 +83,9 @@ class User extends Authenticatable
      {
          return $this->belongsToMany('App\Models\User', 'followusers', 'following_user_id', 'followed_user_id');
      }
+
+      //プロフィールモデルとのリレーション
+    public function userprofile(){
+        return $this->belongsTo('App\Models\Userprofile');
+    } 
 }

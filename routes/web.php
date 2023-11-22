@@ -80,19 +80,17 @@ Route::get('/userprofile/show/{user}',[UserprofileController::class,'show'])->na
 Route::get('/userprofile/{userprofile}/edit',[UserprofileController::class,'edit'])->name('userprofile.edit');
 //プロフィールを更新
 Route::put('/userprofile/{userprofile}',[UserprofileController::class,'update'])->name('userprofile.update');
+
+
 //プロフィール物理削除
-Route::delete('/userprofile/{userprofile}',[UserprofileController::class,'destroy'])->name('userprofile.destroy');
+Route::delete('/userprofile/{user}',[UserprofileController::class,'destroy'])->name('userprofile.destroy');
 
-//フォローを付ける
-//oute::get('userlike/{user}',[UserlikeController::class,'like'])->name('userlike');
-//フォローをはすず
-//Route::get('/userlike/{user}',[UsrelikeController::class,'unlike'])->name('userunlike');
 
-//ユーザ一覧を表示
+//フォローしているユーザ一覧を表示
 Route::get('users', [FollowuserController::class,'index'])->name('users');
-// Route::post('/users/{user}/unfollow', [FollowuserController::class,'unfollow']);
 
-//Route::post('/follow/{userId}', [ FollowuserController::class, 'store'])->name('follow');
+Route::get('followed', [FollowuserController::class,'followed'])->name('followed');
+
 
 //followを付ける
 Route::get('follow/{user}',[FollowuserController::class,'follow'])->name('follow');
@@ -100,5 +98,14 @@ Route::get('follow/{user}',[FollowuserController::class,'follow'])->name('follow
 Route::get('/unfollow/{user}',[FollowuserController::class,'unfollow'])->name('unfollow');
 
 
-
+//検索
 Route::get('search', [PostController::class,'search'])->name('post.search');
+
+
+//フォローを付ける
+//oute::get('userlike/{user}',[UserlikeController::class,'like'])->name('userlike');
+//フォローをはすず
+//Route::get('/userlike/{user}',[UsrelikeController::class,'unlike'])->name('userunlike');
+// Route::post('/users/{user}/unfollow', [FollowuserController::class,'unfollow']);
+
+//Route::post('/follow/{userId}', [ FollowuserController::class, 'store'])->name('follow');

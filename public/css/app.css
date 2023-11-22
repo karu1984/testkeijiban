@@ -6,7 +6,10 @@
     display: none;
 }
 
-
+h1 {
+    font-family: YuGothic,'Yu Gothic',YuGothic,'Yu Gothic',sans-serif;
+  }
+  
 .top-header {
     position: sticky;
     top: 0;
@@ -72,11 +75,13 @@
 }
 
 .mask {
-    /* position: relative;
-    object-fit: fill;
-    border-radius: 30%;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    object-fit: cover;
     overflow: hidden;
-    z-index: 0; */
+    z-index: 0;
 }
 
 .mask-head {
@@ -84,6 +89,7 @@
     width: 50px;
     height: 50px;
     border-radius: 100%;
+    object-fit: cover;
     overflow: hidden;
     z-index: 0;
 }

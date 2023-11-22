@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Post;
 use App\Models\Like;
 use App\Models\Userprofile;
+use App\Models\Followuser;
 use Illuminate\Support\Facades\Auth;
 
 class UserprofileController extends Controller
@@ -21,7 +22,10 @@ class UserprofileController extends Controller
         $userprofile=Userprofile::where('user_id',Auth::user()->id)->first();
         //ログインユーザの情報
         $user=Auth::user();
-        return view('userprofile',compact('user','userprofile','posts','l_posts'));
+
+        $followusers=Followuser::all();
+    
+        return view('userprofile',compact('user','userprofile','posts','l_posts','followusers'));
     }
 
     public function create()
@@ -37,13 +41,14 @@ class UserprofileController extends Controller
         ]);
 
         $userprofile = new Userprofile;
-        $userprofile->introduction = $request->input(["introduction"]);
+        
         $userprofile->user_id=auth()->user()->id;
         
         $userprofile->save();
 
         //ここからユーザーテーブルに保存する記述、画像のみ。
         $user=Auth::user();
+        $user->introduction = $request->input(["introduction"]);
         if (request('image')){
             $original = request()->file('image')->getClientOriginalName();
              // 日時追加　
@@ -62,9 +67,12 @@ class UserprofileController extends Controller
         $posts=Post::where('user_id',$user->id)->orderBy('created_at','DESC')->get();
       return view('userprofile.show',compact('userprofile','user','posts'));
     }
+
+    
     public function edit(Userprofile $userprofile)
     {
-        return view('userprofile.edit',compact('userprofile'));
+        $user=Auth::user();
+        return view('userprofile.edit',compact('userprofile','user'));
     }
 
     public function update(Request $request,Userprofile $userprofile,User $user)
@@ -74,13 +82,14 @@ class UserprofileController extends Controller
             'image'=>'image|max:1024'
         ]);
 
-        $userprofile->introduction = $request->input(["introduction"]);
+       
         $userprofile->user_id=auth()->user()->id;
         
         $userprofile->save();
         
         //ここからユーザーテーブルに保存する記述、画像のみ。
         $user=Auth::user();
+        $user->introduction = $request->input(["introduction"]);
         if (request('image')){
 
             $original = request()->file('image')->getClientOriginalName();
@@ -89,13 +98,32 @@ class UserprofileController extends Controller
             request()->file('image')->move('storage/images', $name);
             $user->image = $name;
         }
+        if (request('imagenone')){
+
+            
+            $user->image = 'デフォルト人影画像.png';
+        }
         $user->save();
-        return redirect()->route('top');
+        return back();
+        // return redirect()->route('top');
     }
 
     public function destroy(Userprofile $userprofile)
     {
-        $userprofile->delete();
+        $user=Auth::user();
+        $user->introduction = '自己紹介がありません';
+        // if (request('image')){
+
+        //     $original = request()->file('image')->getClientOriginalName();
+        //      // 日時追加　
+        //     $name = date('Ymd_His').'_'.$original;
+        //     request()->file('image')->move('storage/images', $name);
+        //     $user->image = $name;
+        // }
+        $user->save();
+
+       
+        // $userprofile->delete();
         return redirect()->route('top');
     }
 }
