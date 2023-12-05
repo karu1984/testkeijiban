@@ -33,10 +33,14 @@ class CommentController extends Controller
         ]);
 
         $comment = new Comment();
-        $comment->comment = $request->comment;
+
+        $comment->comment=$request->comment;
         $comment->post_id = $request->post_id;
         $comment->user_id = Auth::user()->id;
         $comment->save();
+
+        // CSRFトークンを再生成して、二重送信対策
+        $request->session()->regenerateToken(); 
  
         return redirect()->route('show',$comment->post->id);
     }

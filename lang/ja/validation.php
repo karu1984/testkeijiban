@@ -88,6 +88,7 @@ return [
     'max_digits' => ':attributeは、:max桁以下で指定してください。',
     'mimes' => ':attributeには:valuesタイプのファイルを指定してください。',
     'mimetypes' => ':attributeには:valuesタイプのファイルを指定してください。',
+
     'min' => [
         'numeric' => ':attributeには、:min以上の数字を指定してください。',
         'file' => ':attributeには、:min kb以上のファイルを指定してください。',
@@ -136,13 +137,13 @@ return [
     'starts_with' => ':attributeには、:valuesのどれかで始まる値を指定してください。',
     'string' => ':attributeは文字列を指定してください。',
     'timezone' => ':attributeには、有効なゾーンを指定してください。',
-    'unique' => ':attributeの値は既に存在しています。',
+    'unique' => ':attributeは既に存在しています。',
     'uploaded' => ':attributeのアップロードに失敗しました。',
     'uppercase' => ':attributeは、大文字のみで指定してください。',
     'url' => ':attributeに正しい形式を指定してください。',
     'ulid' => ':attributeに有効なULIDを指定してください。',
     'uuid' => ':attributeに有効なUUIDを指定してください。',
-
+   
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

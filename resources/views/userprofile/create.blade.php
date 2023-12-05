@@ -7,7 +7,7 @@
             @include('sidebar')
 
             {{-- コンテンツ本体 --}}
-            <div class="col-7">
+            <div class="col-7phone-body">
                 <h1>
                     ユーザプロフィール作成
                 </h1>

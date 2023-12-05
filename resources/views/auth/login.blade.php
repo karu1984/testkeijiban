@@ -52,6 +52,5 @@
                 </form>
 
         </x-authentication-card>
-        </div>
     </x-guest-layout>
 @endsection

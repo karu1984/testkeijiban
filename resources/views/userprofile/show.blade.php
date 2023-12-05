@@ -8,24 +8,18 @@
 
         {{-- 自己紹介などコンテンツ本体 --}}
         <!--自己紹介があれば表示-->
-        <div class="col-7">
+        <div class="col-7 phone-body">
             <h4 class="mt-2  anim-box slidein is-animated">投稿したユーザのプロフィールページです</h4>
-            @if (isset($userprofile->id))
-                <div class="row">
-                    <!--画像があれば表示-->
-                    <div class="col-2 m-2">
-                        <img src="{{ asset('storage/images/' . $user->image) }}" class="mask">
-                    </div>
-                    <div class="col">
-                        ユーザID:{{ $user->id }}<br>
-                        ユーザ氏名:{{ $user->name }}<br>
-                        紹介:{{ $user->introduction }}<br>
-                    </div>
-                </div>
-                <!--自己紹介が登録されてなければ表示-->
-            @else
-                自己紹介がありません
-            @endif
+            <!--画像があれば表示-->
+            <div class="col-2 m-2">
+                <img src="{{ asset('storage/images/' . $user->image) }}" class="mask">
+            </div>
+            <div class="col">
+                ユーザID:{{ $user->id }}<br>
+                ユーザ氏名:{{ $user->name }}<br>
+                紹介:{{ $user->introduction }}<br>
+            </div>
+
 
             {{-- フォロー用のボタン --}}
             {{-- if表示されてるユーザがモデルのfollowusersリレーションでフォローしてるユーザと
@@ -48,19 +42,24 @@
             <div class="justify-content-center mt-auto py-0 mb-2 bg-body-tertiary">投稿したポスト新着</div>
             @if (isset($user->id))
                 @foreach ($posts as $post)
-                    <p><a href="{{ route('show', $post) }}">{{ $post->title }}</a>
+                    <div class="d-flex">
+                        <a class="blue-moji nav-link me-auto" href="{{ route('show', $post) }}">{{ $post->title }}</a>
                         {{ $post->user->name }}
-                    <div class="text-end"><span>{{ $post->created_at->diffForHumans() }}</span></div>
-                    {{ $post->body }}
-
+                        <span>{{ $post->created_at->diffForHumans() }}</span>
+                    </div>
+                    <div class="mx-2" id="word-break">
+                        {{ nl2br($post->body) }}
+                    </div>
                     <hr>
                 @endforeach
+
+                {!! $posts->links('pagination::bootstrap-5') !!}
             @endif
 
         </div>
 
         {{-- サイドバーパーツ、広告など --}}
-        @include('sidepop')
+        {{-- @include('sidepop') --}}
 
     </div>
 @endsection

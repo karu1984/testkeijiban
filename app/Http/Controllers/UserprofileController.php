@@ -18,14 +18,12 @@ class UserprofileController extends Controller
         $l_posts = Like::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
         //自身が投稿した投稿の一覧
         $posts = Post::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
-        //自身のプロフィール
-        $userprofile=Userprofile::where('user_id',Auth::user()->id)->first();
         //ログインユーザの情報
         $user=Auth::user();
 
         $followusers=Followuser::all();
     
-        return view('userprofile',compact('user','userprofile','posts','l_posts','followusers'));
+        return view('userprofile',compact('user','posts','l_posts','followusers'));
     }
 
     public function create()
@@ -61,10 +59,10 @@ class UserprofileController extends Controller
         return redirect()->route('top');
     }
 
-    public function show(Userprofile $userprofile,User $user,Post $post)
+    public function show(User $user,Post $post)
     {
         $userprofile=Userprofile::where('user_id',$user->id)->first();
-        $posts=Post::where('user_id',$user->id)->orderBy('created_at','DESC')->get();
+        $posts=Post::where('user_id',$user->id)->orderBy('created_at','DESC')->paginate(3);
       return view('userprofile.show',compact('userprofile','user','posts'));
     }
 
@@ -83,9 +81,9 @@ class UserprofileController extends Controller
         ]);
 
        
-        $userprofile->user_id=auth()->user()->id;
+        // $userprofile->user_id=auth()->user()->id;
         
-        $userprofile->save();
+        // $userprofile->save();
         
         //ここからユーザーテーブルに保存する記述、画像のみ。
         $user=Auth::user();
@@ -104,8 +102,8 @@ class UserprofileController extends Controller
             $user->image = 'デフォルト人影画像.png';
         }
         $user->save();
-        return back();
-        // return redirect()->route('top');
+        
+        return redirect()->route('userprofile');
     }
 
     public function destroy(Userprofile $userprofile)

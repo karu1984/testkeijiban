@@ -16,12 +16,13 @@ class PostController extends Controller
         
         $posts=Post::orderBy('created_at','desc')->paginate(3);
         $user=Auth::user();
+    
         $userprofiles = Userprofile::all();
         if(isset(Auth::user()->id)){
         $userprofile=Userprofile::where('user_id',Auth::user()->id)->first();
         }
         
-        return view('top',compact('user','posts','userprofiles','userprofile'));
+        return view('top',compact('user','posts','userprofiles'));
     }
 
     public function create(User $user)
@@ -30,13 +31,13 @@ class PostController extends Controller
         if(isset(Auth::user()->id)){
             $userprofile=Userprofile::where('user_id',Auth::user()->id)->first();
             }
-        return view('create',compact('user','userprofile'));
+        return view('create',compact('user'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' =>'required|max:255',
+            'title' =>'required|max:40',
             'body' =>'required|max:255',
             'image'=>'image|max:1024'
         ]);
@@ -53,15 +54,18 @@ class PostController extends Controller
             $post->image = $name;
         }
         $post->save();
+        //トークンを生成して連投を防止
+        $request->session()->regenerateToken(); 
 
         return redirect()->route('top')->with('success','記事を投稿しました');
     }
-    public function show(Post $post,User $user,Userprofile $userprofile)
+    public function show(Post $post,User $user,)
     {
-        $userprofile=Userprofile::where('user_id',Auth::user())->first();
+
+        $comments = $post->setRelation('comments', $post->comments()->orderBy('created_at','desc')->paginate(3));   
         $user=Auth::user();
-        
-        return view('show',compact('user','post','userprofile'));
+      
+        return view('show',compact('user','post','comments'));
     }
 
     public function edit(Post $post)
@@ -72,8 +76,9 @@ class PostController extends Controller
     public function update(Request $request,Post $post)
     {
         $request->validate([
-            'title' =>'required|max:255',
+            'title' =>'required|max:40',
             'body' =>'required|max:255',
+            'image'=>'image|max:1024'
            
         ]);
         $post->title = $request->input(["title"]);

@@ -6,27 +6,272 @@
     display: none;
 }
 
+#word-break{
+    word-break: break-all;
+}
+
+.flex-container{
+    display: flex;  /* ← これを指定する */
+}
+
+.flex-container-b{
+    flex: 1;   
+}
+.flex-item-c{
+    justify-content: flex-end;
+    width: auto;
+    height: 30px;
+}
+.flex-item-b{
+}
+
+
+.image-100{
+    max-width: 340px; /* 最大幅 */
+   
+}
+
+.nav-moji{
+    align-items: flex-end;
+}
+
+.mask {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    z-index: 0;
+
+} 
+
+.blue-moji{color: #0d6efd;}
+.black-moji{color: black;}
+#menu-btn-check {
+    display: none;
+}
+
+/* 481px以上つまりPC表示時のCSSを入れる */
+@media screen and (min-width: 501px){
+.menu-content{
+display: none;
+}
+}
+
+/* ヘッダーの画像サイズ */
+.mask-head{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* 480px以下つまりスマホ表示時のCSSを入れる */
+@media screen and (max-width: 500px){
+
+
+
+
+.white-moji{color: white;}
+/* スマホ時隠す */
+.phone-none{display: none;}
+
+.phone-head-size{height: 56px;}
+.phone-head{    display:none;}
+
+
+
+/* スマホ時最大化する */
+.phone-body{width: 100%;}
+/* スマホ時文字小さく */
+.phone-moji{font-size: small;}
+.phone-img {
+    max-width: 300px; 
+}
+/* スマホ時の画像サイズ */
+.mask{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    z-index: 0;
+}
+/* スマホ時のヘッダー画像サイズ */
+.mask-head{
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    z-index: 0;
+}
+/* ナビメニュー上書き　パディング */
+.nav{
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size:small;
+}
+.nav-link{
+    padding-left: 0px;
+    padding-right: 0px;
+
+}
+/*検索窓のエリア*/
+.hidden-search{
+    width:290px;
+    position: absolute;
+    left: 30%; /*leftの値を変更して検索窓を画面外へ*/
+    z-index: 10;
+    transition: all 0.1s;/*アニメーション設定*/
+}
+/* チェックボタンを隠す */
+#search-btn-check {
+    display: none;
+}
+/* チェックボタンが押された後の挙動 */
+#search-btn-check:checked ~ #search-content{
+ left: -200%;/*メニューを画面内へ*/
+}
+
+
+/*ハンバーガーメニュー  */
+/* メニューボタン作成 */
+.menu-btn {
+    position:absolute;
+    top: 8px;
+    right: 10px;
+    display: flex;
+    height: 40px;
+    width: 40px;
+    justify-content: center;
+    align-items: center;
+    z-index: 9;
+    background-color: #3584bb;
+    border-radius: 8%;
+}
+.menu-btn span,
+.menu-btn span:before,
+.menu-btn span:after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 25px;
+    border-radius: 3px;
+    background-color: #faf8f9;
+    position: absolute;
+}
+/* 三本戦の上 */
+.menu-btn span:before {
+    bottom: 8px;
+}
+/* 三本線の下 */
+.menu-btn span:after {
+    top: 8px;
+}
+#menu-btn-check:checked ~ .menu-btn span {
+    background-color: rgba(255, 255, 255, 0);/*メニューオープン時は真ん中の線を透明にする*/
+}
+/* ×をつくる */
+#menu-btn-check:checked ~ .menu-btn span::before {
+    bottom: 0;
+    transform: rotate(45deg);
+}
+/* ×をつくる */
+#menu-btn-check:checked ~ .menu-btn span::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
+#menu-btn-check {
+    display: none;
+}
+
+/* メニューリストの配置位置 */
+.menu-content ul {
+    padding: 10px 10px 0;
+}
+/* 各メニューリストの下辺に白線 */
+.menu-content ul li {
+    border-bottom: solid 1px #ffffff;
+    list-style: none;
+}
+/*  */
+.menu-content ul li a {
+    display: block;
+    width: auto;
+    font-size: 15px;
+    /* box-sizing: border-box; */
+    color:#ffffff;
+    text-decoration: none;
+    padding: 9px 15px 10px 0;
+    position: relative;
+}
+.menu-content ul li a::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-top: solid 2px #ffffff;
+    border-right: solid 2px #ffffff;
+    transform: rotate(45deg);
+    position: absolute;
+    right: 11px;
+    top: 16px;
+}
+
+/* メニューリスト表示領域 */
+.menu-content {
+    width: 50%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 100%;/*leftの値を変更してメニューを画面外へ*/
+    z-index: 7;
+    background-color: #50a6d9;
+    transition: all 0.1s;/*アニメーション設定*/
+    border-radius: 3%;
+ 
+}
+
+#menu-btn-check:checked ~ .menu-content{
+    left: 50%;/*メニューを画面内へ*/
+   }
+
+}
+
+/* 上までがスマホレスポンシブ対応 */
+#none .search-none {
+    display: none;
+}
+
 h1 {
     font-family: YuGothic,'Yu Gothic',YuGothic,'Yu Gothic',sans-serif;
   }
+
+
   
 .top-header {
     position: sticky;
     top: 0;
 
     background: white;
-    z-index: 999;
+    z-index: 7;
 }
 
 .raberu {
-    /* position: relative; */
+    width: auto;
     background-color: royalblue;
-    padding: 3px 20px;
+    padding: 2px 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.21);
-    border: solid 1px royalblue;
+    /* border: solid 1px royalblue; */
     border-radius: 100px;
-    font-weight: bold;
-    font-size: 12px;
+    /* font-weight: bold; */
+    font-size:12px;
     color: #fff;
     /* transition: all ease-in-out 0.1s; */
 }
@@ -74,27 +319,6 @@ h1 {
     }
 }
 
-.mask {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    border-radius: 100%;
-    object-fit: cover;
-    overflow: hidden;
-    z-index: 0;
-}
-
-.mask-head {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    object-fit: cover;
-    overflow: hidden;
-    z-index: 0;
-}
-
-
 .unlike-btn {
     color: #e54747;
     margin-left: 20px;
@@ -108,7 +332,12 @@ h1 {
     color: #968b8b;
     margin-left: 20px;
 }
-
+.post-img {
+    max-width: 400px;
+   
+    width: 100%;
+    height: 100%;
+}
 
 .grayscale-img {
     max-width: 400px;

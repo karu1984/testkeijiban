@@ -44,6 +44,8 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            // mailtrapを使うために必要な記述↓
+            'verify_peer'       => false,
         ],
 
         'ses' => [

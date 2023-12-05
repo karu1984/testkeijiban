@@ -5,60 +5,103 @@
 
             {{-- サイドバーパーツ自己紹介など --}}
             @include('sidebar')
-
-            {{-- コンテンツ本体 --}}
-            <div class="col-7">
+            <div class="col-lg-8 col-md-8 col-sm-8">
                 <h1>検索記事一覧</h1>
+                {{-- コンテンツ本体 --}}
                 <div class="card p-2">
                     @foreach ($posts as $post)
-                        <div class="row">
-                            <div class="col-2">
-                                {{-- ユーザ画像表示 --}}
+                        <div class="flex-container">
+
+                            {{-- ユーザ画像表示 --}}
+                            {{-- 画像リンク分岐、ログインユーザならマイページに遷移 --}}
+                            @auth
+                                @if ($post->user->id == Auth::user()->id)
+                                    <a href="{{ route('userprofile', $post->user->id) }}">
+                                        <img src="{{ asset('storage/images/' . $post->user->image) }}"
+                                            class="m-2 mask phone-gazo border border-2"></a>
+
+                                    {{-- 画像リンク分岐、ログインユーザでないなら投稿ユーザのページに遷移 --}}
+                                @else
+                                    <a href="{{ route('userprofile.show', $post->user->id) }}">
+                                        <img src="{{ asset('storage/images/' . $post->user->image) }}"
+                                            class="m-2 mask border border-2"></a>
+                                @endif
+                            @endauth
+                            {{-- ログインしてないならすべて投稿ユーザのページに遷移 --}}
+                            @if (!Auth::user())
                                 <a href="{{ route('userprofile.show', $post->user->id) }}">
                                     <img src="{{ asset('storage/images/' . $post->user->image) }}"
                                         class="m-2 mask border border-2"></a>
-                            </div>
-                            {{-- 投稿タイトル --}}
-                            <div class="col">
-                                <a href="{{ route('show', $post) }}">{{ $post->title }}</a>
-                            </div>
-                            <div class="col text-end">
-                                <a href="{{ route('userprofile.show', $post->user->id) }}">投稿者:{{ $post->user->name }}</a>
-                                {{ $post->created_at->diffForHumans() }}
+                            @endif
+
+                            <div class="flex-container-b">
+                                {{-- 投稿タイトル --}}
+
+                                <div class="flex-item flex-item-c d-flex"> &nbsp
+                                    <a class="blue-moji nav-link"
+                                        href="{{ route('userprofile.show', $post->user->id) }}">{{ $post->user->name }}
+                                        <span class="black-moji">{{ $post->created_at->diffForHumans() }}</span></a>
+                                </div>
+
+                                <div class="flex-item flex-item-b d-flex">
+                                    <a class="blue-moji nav-link" href="{{ route('show', $post) }}">{{ $post->title }}</a>
+                                    &nbsp
+                                </div>
                             </div>
                         </div>
+
+
+
 
                         <!--画像があれば表示-->
-                        <div class="col-6 align-self-center">
+                        <div class="d-flex justify-content-center">
                             @if ($post->image)
-                                <div class="card border-0">
-                                    <img src="{{ asset('storage/images/' . $post->image) }}">
-                                </div>
+                                <section class="grayscale">
+                                    <div class="grayscale-img">
+                                        <a href="{{ route('show', $post) }}">
+                                            <img src="{{ asset('storage/images/' . $post->image) }}" class="rounded-3">
+                                        </a>
+                                    </div>
+                                </section>
                             @endif
-                            <p>{{ $post->body }}</p>
+                        </div>
+                        {{-- 記事本文 --}}
+                        <div>
+                            <p>{{ nl2br($post->body) }}</p>
                         </div>
 
-                      
-
                         <div class="row">
-                            <div class="col-2">
-                            </div>
-                                <div class="col">
-                                    <!--コメント件数カウント-->
-                                    <i class="bi bi-chat mx-5">{{ $post->comments->count() }}件</i>
+                            <div class="col-2"></div>
+                            <div class="col ">
+                                <!--コメント件数カウント-->
+                                {{-- いいねのてすと --}}
+                                <i class="bi bi-chat ms-5 me-1"></i><span>{{ $post->comments->count() }}</span>
+                                @auth
+                                    <td>
+                                        @if ($post->likes()->where('user_id', Auth::user()->id)->count() == 1)
+                                            <a href="{{ route('unlike', $post) }}">
+                                                <i class="bi bi-heart-fill unlike-btn ms-5"></i></a><span class="likecount">
+                                                {{ $post->likes->count() }}</span>
+                                            <!--ログインユーザがいいねしてなかった場合-->
+                                        @else
+                                            <a href="{{ route('like', $post) }}">
+                                                <i class="bi bi-heart-fill like-btn  ms-5"></i></a>
+                                            <span>{{ $post->likes->count() }}</span>
+                                        @endif
+                                    </td>
+                                @else
                                     <!--いいねのカウント-->
-                                    <i class="bi bi-heart">{{ $post->likes->count() }}件</i>
-                                </div>
-                           
+                                    <i class="bi bi-heart ms-5 me-1"></i><span>{{ $post->likes->count() }}</span>
+                                @endauth
+                            </div>
                         </div>
                         <hr>
                     @endforeach
+
                     {!! $posts->links('pagination::bootstrap-5') !!}
+
                 </div>
             </div>
-
-            {{-- サイドバーパーツ、広告など --}}
-            @include('sidepop')
         </div>
     </div>
 @endsection

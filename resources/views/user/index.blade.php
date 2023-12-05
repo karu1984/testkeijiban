@@ -8,7 +8,7 @@
         @include('sidebar')
 
         {{-- コンテンツ本体 --}}
-        <div class="col-7">
+        <div class="col-7 phone-body">
             <h4 class="my-2 anim-box slidein is-animated">フォローしているユーザー</h4>
             @foreach ($users as $user)
                 {{-- ユーザ画像表示 --}}

@@ -20,9 +20,9 @@ use App\Http\Controllers\FollowuserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware([
     'auth:sanctum',
@@ -33,26 +33,28 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+Route::get('/', [PostController::class,'index'])->name('top');
+Route::get('/top', [PostController::class,'index'])->name('top');
 
-Route::get('top', [PostController::class,'index'])->name('top');
-Route::get('/top/create',[PostController::class,'create'])->name('top.create');
-Route::post('/top/store',[PostController::class,'store'])->name('top.store');
+// 新規記事投稿
+Route::get('/top/create',[PostController::class,'create'])->name('top.create')->middleware(['auth'])->middleware('throttle:3, 1');
+Route::post('/top/store',[PostController::class,'store'])->name('top.store')->middleware(['auth']);
 
-Route::get('create', function () {return view('create');});
+Route::get('create', function () {return view('create');})->middleware(['auth']);
 
 Route::get('/top/show/{post}',[PostController::class,'show'])->name('show');
 
-Route::get('/top/{post}/edit',[PostController::class,'edit'])->name('edit');
-Route::put('/top/{post}',[PostController::class,'update'])->name('update');
+Route::get('/top/{post}/edit',[PostController::class,'edit'])->name('edit')->middleware(['auth']);
+Route::put('/top/{post}',[PostController::class,'update'])->name('update')->middleware(['auth']);
 
-Route::delete('/top/{post}',[PostController::class,'destroy'])->name('post.destroy');
-Route::delete('/userprofile/{post}',[PostController::class,'destroytwo'])->name('post.destroytwo');
+Route::delete('/top/{post}',[PostController::class,'destroy'])->name('post.destroy')->middleware(['auth']);
+Route::delete('/userprofile/{post}',[PostController::class,'destroytwo'])->name('post.destroytwo')->middleware(['auth']);
 
 
 //コメント投稿処理
-Route::post('/top/{comment}/comments',[CommentController::class,'store']);
+Route::post('/top/{comment}/comments',[CommentController::class,'store'])->middleware(['auth'])->middleware('throttle:3, 1');
 //コメント取消処理
-Route::delete('/top/show/{comment}',[CommentController::class,'destroy'])->name('comment.destroy');
+Route::delete('/top/show/{comment}',[CommentController::class,'destroy'])->name('comment.destroy')->middleware(['auth']);
 
 //いいねを付ける
 Route::get('like/{post}',[LikeController::class,'like'])->name('like');
@@ -69,7 +71,7 @@ Route::get('/userunlike/{user}',[UserlikeController::class,'userunlike'])->name(
 Route::get('hyoji',[UserprofController::class,'hyoji'])->name('hyoji');
 
 //ユーザプロフィールを表示
-Route::get('userprofile', [UserprofileController::class,'index'])->name('userprofile');
+Route::get('userprofile', [UserprofileController::class,'index'])->name('userprofile')->middleware(['auth']);
 //プロジェクト作成ページに遷移
 Route::get('/userprofiletop/create',[UserprofileController::class,'create'])->name('userprofile.create');
 //プロフィールを保存
@@ -77,9 +79,9 @@ Route::post('/userprofile/store',[UserprofileController::class,'store'])->name('
 //プロフィールを表示
 Route::get('/userprofile/show/{user}',[UserprofileController::class,'show'])->name('userprofile.show');
 //プロフィール編集ページに遷移
-Route::get('/userprofile/{userprofile}/edit',[UserprofileController::class,'edit'])->name('userprofile.edit');
+Route::get('/userprofile/{user}/edit',[UserprofileController::class,'edit'])->name('userprofile.edit');
 //プロフィールを更新
-Route::put('/userprofile/{userprofile}',[UserprofileController::class,'update'])->name('userprofile.update');
+Route::put('/userprofile/{user}',[UserprofileController::class,'update'])->name('userprofile.update');
 
 
 //プロフィール物理削除
@@ -87,9 +89,9 @@ Route::delete('/userprofile/{user}',[UserprofileController::class,'destroy'])->n
 
 
 //フォローしているユーザ一覧を表示
-Route::get('users', [FollowuserController::class,'index'])->name('users');
+Route::get('users', [FollowuserController::class,'index'])->name('users')->middleware(['auth']);
 
-Route::get('followed', [FollowuserController::class,'followed'])->name('followed');
+Route::get('followed', [FollowuserController::class,'followed'])->name('followed')->middleware(['auth']);
 
 
 //followを付ける
